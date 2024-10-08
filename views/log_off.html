@@ -136,7 +136,7 @@
 
         #puzzle-piece {
             position: absolute;
-            top: 1.1rem;
+            top: 1.3rem;
             left: 0;
             width: 1.1rem;
             border: 1px solid #fff;
@@ -288,7 +288,7 @@
                 <div id="slider-bar">
                     拖动滑块完成拼图
                     <div id="slider-btn" class="flex">
-                        <img src="../public/images/line.png" alt="">
+                        <img draggable="false" src="../public/images/line.png" alt="">
                     </div>
                 </div>
 
@@ -391,8 +391,8 @@
             if (!isDragging) return;
             isDragging = false;
             var finalX = $("#puzzle-piece").position().left * scale;
-            console.log('finalX', finalX)
-            alert(finalX)
+            console.log('finalX: ', finalX)
+            alert('x: ' + finalX)
             $.ajax({
                 type: "POST",
                 url: '/verify_captchaV3',
@@ -508,12 +508,15 @@
                 $("#slider-btn").mousedown(function (e) {
                     isDragging = true;
                     startX = e.clientX;
+                    console.log('startX', startX)
+
                 });
 
                 // 鼠标移动时拖动拼图块和滑块
                 $(document).mousemove(function (e) {
                     if (isDragging) {
                         var moveX = e.clientX - startX;
+                        console.log('mousemove', e.clientX, startX, moveX)
                         if (moveX >= 0 && moveX <= bgWidthActual - slideWidthActual) { // 限制滑块的移动范围
                             $("#slider-btn").css("left", moveX + "px");
                             $("#puzzle-piece").css("left", moveX + "px");
