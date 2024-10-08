@@ -105,6 +105,9 @@
             background: #000;
             color: #fff;
         }
+        .btn.disabled {
+            background: #5c5c5c;
+        }
 
         .slide-wrap {
             position: fixed;
@@ -278,7 +281,7 @@
             <div class="msg2">注销APP账号说明</div>
         </div>
 
-        <div class="btn">确定</div>
+        <div class="btn disabled">确定</div>
 
         <div class="slide-wrap">
             <div id="slider-puzzle-container">
@@ -323,6 +326,10 @@
 
         var BG_WIDTH = 200
         var SLIDE_WIDTH = 40
+        var timer = null
+        var second = 60
+
+        var passed = false
 
         // 验证码
         var isDragging = false
@@ -349,6 +356,21 @@
             }
         }
 
+        function countDown() {
+            clearInterval(timer)
+            $('.code-msg').text('获取验证码(60)')
+
+            timer = setInterval(function () {
+                second--
+                $('.code-msg').text('获取验证码('+ second + ')')
+
+                if(second === 0) {
+                    clearInterval(timer)
+                    $('.code-msg').text('获取验证码')
+                    second = 60
+                }
+            }, 1000)
+        }
 
         function getCode(res) {
 
@@ -370,6 +392,16 @@
                 contentType: 'application/json;charset=UTF-8',
                 dataType: 'json'
             });
+        }
+
+        function ifDisabled() {
+            if(passed && $('#checkbox').prop('checked')) {
+                $('.btn').removeClass('disabled')
+                return true
+            } else {
+                $('.btn').addClass('disabled')
+                return false
+            }
         }
 
         function verify() {
@@ -406,18 +438,30 @@
                 }),
                 success: function (res) {
                     console.log('/verify captchaV3', res)
+                    passed = true
+                    ifDisabled()
+                    $("#slider-btn").css("left", 0 + "px");
+                    $("#puzzle-piece").css("left", 0 + "px");
+                    $('.slide-wrap').hide()
+                    countDown()
                 },
                 error: function (err) {
                     console.log('err', err)
+                    // $("#slider-btn").css("left", 0 + "px");
+                    // $("#puzzle-piece").css("left", 0 + "px");
                 },
                 contentType: 'application/json;charset=UTF-8',
                 dataType: 'json'
             });
 
-            setTimeout(function () {
-                $("#slider-btn").css("left", 0 + "px");
-                $("#puzzle-piece").css("left", 0 + "px");
-            }, 1000)
+            // todo: 去掉
+            passed = true
+            ifDisabled()
+            $("#slider-btn").css("left", 0 + "px");
+            $("#puzzle-piece").css("left", 0 + "px");
+            $('.slide-wrap').hide()
+
+            countDown()
         }
 
         function getImage(init) {
@@ -462,13 +506,16 @@
 
             $('#email').on('input', validateEmail)
 
+            $('#checkbox').on('change', ifDisabled)
+
             $('.btn').click(function () {
+                if(!ifDisabled()) return
                 verify()
             })
 
             $('.code-msg').click(function () {
                 validateEmail()
-                if (!emailValid) return
+                if (!emailValid || second !== 60) return
                 getImage(1)
             })
 
