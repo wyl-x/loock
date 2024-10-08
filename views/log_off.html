@@ -246,7 +246,7 @@
             // document.documentElement.clientWidth设备可是宽度  document.body.clientWidth IE兼容问题
             var winW = document.documentElement.clientWidth || document.body.clientWidth
             var fontSize = winW * 100 / 720
-            document.documentElement.style.fontSize = Math.min(fontSize, 100) + 'px';
+            document.documentElement.style.fontSize = Math.min(fontSize, 60) + 'px';
             // console.log('1rem' + winW * 100 / 750 + 'px');
         }
 
@@ -450,6 +450,10 @@
                 $('#checkbox').attr('checked', true)
             }
 
+            if (getQuery('email')) {
+                $('#email').val(getQuery('email'))
+            }
+
             $('.msg2').click(function () {
                 location.href = './log_off_desc.html?email=' + $('#email').val()
             })
@@ -462,6 +466,7 @@
             })
 
             $('.code-msg').click(function () {
+                validateEmail()
                 if (!emailValid) return
                 getImage(1)
             })
