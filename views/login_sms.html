@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,viewport-fit=auto">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <link href="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/mobile/need/layer.css" rel="stylesheet">
+    <style type="text/css">
+        *{
+            margin:0;
+            padding: 0;
+        }
+        body {
+            margin: 0;
+            background-color: white;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            font-family: :"PingFangSC-Regular","Microsoft YaHei";
+        }
+        a {
+            background: transparent;
+            text-decoration: none;
+            -webkit-tap-highlight-color: transparent;
+            color: #0088cc;
+        }
+        a:active {
+            outline: 0;
+        }
+        a:active {
+            color: #006699;
+        }
+        img {
+            border: 0;
+            vertical-align: middle;
+        }
+        button {
+            overflow: visible;
+        }
+        select {o
+            appearance:none;
+            -moz-appearance:none;
+            -webkit-appearance:none;
+            background-color: #fff;
+        }
+        input,textarea{
+           border:none;
+           outline:none;
+           -webkit-user-select:text;-ms-user-select:text;user-select:text;-webkit-appearance:none;
+        }
+        input,
+        button {
+            -webkit-appearance: none;
+            border-radius: 0;
+        }
+        button,
+        select {
+            text-transform: none;
+        }
+        button,
+        html input[type="button"],
+        input[type="reset"],
+        input[type="submit"] {
+            -webkit-appearance: button;
+            cursor: pointer;
+        }
+        button[disabled],
+        html input[disabled] {
+            cursor: default;
+        }
+        button::-moz-focus-inner,
+        input::-moz-focus-inner {
+            border: 0;
+            padding: 0;
+        }
+        input[type="checkbox"],
+        input[type="radio"] {
+            box-sizing: border-box;
+            padding: 0;
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            display: none;
+        }
+        input[type="search"] {
+            -webkit-appearance: textfield;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        input[type="search"]::-webkit-search-cancel-button,
+        input[type="search"]::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+        textarea {
+            overflow: auto;
+            resize: vertical;
+        }
+        ul,
+        ol {
+            list-style: none outside none;
+        }
+        input::-moz-placeholder,
+        textarea::-moz-placeholder {
+            color: #cccccc;
+        }
+        input:-ms-input-placeholder,
+        textarea:-ms-input-placeholder {
+            color: #cccccc;
+        }
+        input::-webkit-input-placeholder,
+        textarea::-webkit-input-placeholder {
+            color: #cccccc;
+        }
+        .clearfix:after{
+            content: '';
+            display: block;
+            clear: both;
+            height: 0;
+            visibility: hidden;
+        }
+　　　　.clearfix{ /*兼容 IE*/
+            zoom: 1;
+        }
+        html{
+            font-size: 20px;
+            height: 100%;
+        }
+        @media screen and (min-width: 350px) and (max-width: 413px){
+            html {
+                font-size: 24px;
+            }
+        }
+        @media screen and (min-width: 414px) {
+            html {
+                font-size: 26px;
+            }
+        }
+        .container{
+            width: 100%;
+            height: 100%;
+        }
+        .top {
+            padding-top:2rem;
+            padding-left:1rem;
+        }
+        .top img {
+            width:5.2rem;
+            width:5.2rem;
+        }
+        .logo {
+            text-align: center;
+            margin-top:2rem;
+        }
+        .logo img {
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+        .name {
+            margin-top:1rem;
+            color:#444444;
+            font-size:0.8rem;
+            text-align: center;
+        }
+        .bind {
+            margin-top:1.6rem;
+            padding:0 1.2rem;
+            margin-bottom:1.5rem;
+        }
+        .phone {
+            padding:0.8rem 0.3rem;
+            border-bottom:1px solid #E8E8E8;
+            border-radius: 0;
+            position:relative;
+            font-size: 0;
+        }
+        .phone img {
+            position:absolute;
+            width: 1rem;
+            height: 1rem;
+            right:3%;
+            top:0.8rem;
+            display: none;
+        }
+        .phone-input {
+            height: 1rem;
+            width: 100%;
+        }
+        .code {
+            padding:0.8rem 0.3rem;
+            border-bottom:1px solid #E8E8E8;
+            border-radius: 0;
+            position:relative;
+            font-size: 0;
+        }
+        .code-input {
+            height: 1rem;
+            width: 100%;
+        }
+        .code .s1{
+            position: absolute;
+            right:1%;
+            top:0.6rem;
+            width: 4.5rem;
+            height: 1.4rem;
+            line-height: 1.4rem;
+            text-align: center;
+            background: #FF8C00;
+            border-radius: 4px;
+            color:#fff;
+            font-size:0.5rem;
+            display: none;
+        }
+        .code .s2{
+            position: absolute;
+            right:1%;
+            top:0.6rem;
+            width: 4.5rem;
+            height: 1.4rem;
+            line-height: 1.4rem;
+            text-align: center;
+            background: #E8E8E8;
+            border-radius: 4px;
+            color:#fff;
+            font-size:0.5rem;
+            display: none;
+        }
+        .code .s3{
+            position: absolute;
+            right:1%;
+            top:0.6rem;
+            width: 4.5rem;
+            height: 1.4rem;
+            line-height: 1.4rem;
+            text-align: center;
+            background: #eee;
+            border-radius: 4px;
+            color:#fff;
+            font-size:0.5rem;
+        }
+        .submit1 {
+            width: 90%;
+            margin-left:5%;
+            background: #FF8C00;
+            border-radius: 4px;
+            height: 1.9rem;
+            line-height: 1.9rem;
+            text-align: center;
+            color:#fff;
+            font-size: 0.7rem;
+            cursor:pointer;
+        }
+        .submit2{
+            width: 90%;
+            margin-left:5%;
+            background: #E8E8E8;
+            border-radius: 4px;
+            height: 1.9rem;
+            line-height: 1.9rem;
+            text-align: center;
+            color:#fff;
+            font-size: 0.7rem;
+        }
+        .default-visible{
+            display: none;
+        }
+        .golf-visible{
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="top default-visible">
+            <img src="/public/images/loock.png">
+        </div>
+        <div class="logo">
+            <img class="default-visible" src="/public/images/loock_logo.png">
+            <img class="golf-visible" src="/public/images/golf_logo.png">
+        </div>
+        <div class="name">
+            <span class="default-visible">鹿客智能</span>
+            <span class="golf-visible">鹿客物联网门锁</span>
+        </div>
+        <div class="bind">
+            <div class="phone">
+                <input type="text" class="phone-input" placeholder="请输入手机号" maxlength="11">
+                <img src="/public/images/delete.png" class="delete">
+            </div>
+            <div class="code">
+                <input type="text" class="code-input" placeholder="请输入验证码">
+                <span class="s1">发送验证码</span>
+                <span class="s2">已发送(119s)</span>
+                <span class="s3">发送验证码</span>
+            </div>
+        </div>
+        <div class="submit2 submit">
+            立即绑定
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/layer/3.5.1/mobile/layer.js"></script>
+    <script type="text/javascript">
+        var timer;
+        $(function(){
+            var params = getParamsFromUrl(location.href || '')
+            var from = params.from || 'default'
+            $('.' + from + '-visible').show()
+            $('.s1').click(function(){
+                var phone = $('.phone-input').val(),
+                    phoneReg = /(^\d{11}$)|(^09\d{8}$)/ ;
+                if(phoneReg.test(phone) == false){
+                    layer.open({
+                        content:'请输入正确的手机号',
+                        skin: 'msg',
+                        fixed: false,
+                        top:-100,
+                        time:1
+                    })
+                    return
+                }
+                $.ajax({
+                    type: 'POST',
+                    url:'/api/v1/send_verify_sms',
+                    data:JSON.stringify({username:phone}),
+                    contentType:"application/json",
+                    success:function(datas){
+                            if(datas.ErrNo == 0) {
+                                $('.s1').hide()
+                                $('.s2').show()
+                                var time = 119;
+                                    timer = setInterval(function(){
+                                        time --
+                                        if(time <= -1){
+                                            clearInterval(timer)
+                                            $('.s1').show()
+                                            $('.s2').hide()
+                                        }
+                                        $('.s2').html("已发送("+time+"s)")
+                                    },1000)
+                                layer.open({
+                                    content:'短信发送成功',
+                                    skin: 'msg',
+                                    fixed: false,
+                                    top:-100,
+                                    time:1
+                                })
+                            }else if(datas.ErrNo == 4005 ){
+                                layer.open({
+                                    content:'用户不存在',
+                                    skin: 'msg',
+                                    fixed: false,
+                                    top:-100,
+                                    time:1
+                                })
+                            }else if(datas.ErrNo == 4028 ){
+                                layer.open({
+                                    content:'验证码已发送，请勿频繁操作',
+                                    skin: 'msg',
+                                    fixed: false,
+                                    top:-100,
+                                    time:1
+                                })
+                            }else{
+                                layer.open({
+                                    content:datas.ErrMsg || '',
+                                    skin: 'msg',
+                                    fixed: false,
+                                    top:-100,
+                                    time:1
+                                })
+                            }
+
+                    }
+                })
+            })
+
+            $(".phone-input").on("input",function(){
+                var phone = $('.phone-input').val();
+                var phoneReg = /(^\d{11}$)|(^09\d{8}$)/ ;
+
+                if(phoneReg.test(phone) === true){
+                    $('.delete').show()
+                    $('.s1').show()
+                    $('.s3').hide()
+                }else{
+                    $('.delete').hide()
+                    $('.s1').hide()
+                    $('.s3').show()
+                }
+
+                if($('.phone-input').val() != '' && $('.code-input').val() != ''){
+                    $('.submit').removeClass('submit2').addClass('submit1')
+                }else{
+                    $('.submit').removeClass('submit1').addClass('submit2')
+                }
+
+            });
+            $(".code-input").on("input",function(){
+                if($('.code-input').val() != '' && $('.phone-input').val() != ''){
+                    $('.submit').removeClass('submit2').addClass('submit1')
+                }else{
+                    $('.submit').removeClass('submit1').addClass('submit2')
+                }
+            });
+
+            $(".container").on("click",".submit1",function(){
+                var phone = $('.phone-input').val(),
+                    code = $('.code-input').val(),
+                    reg = /^[1-9]\d*$|^0$/ ,
+                    phoneReg = /(^\d{11}$)|(^09\d{8}$)/;
+                if(phoneReg.test(phone) == false ){
+                    layer.open({
+                        content:'手机号或验证码不正确',
+                        skin: 'msg',
+                        fixed: false,
+                        top:-100,
+                        time:1
+                    })
+                    return
+                }else {
+
+                    var params = {} ;
+
+                    var uri = '<%= params.redirect_uri %>';
+                    var state = '<%= params.state %>';
+                    if (uri !== "undefined"){
+                        params.redirect_uri = uri;
+                    }
+                    if(state !==  "undefined"){
+                        params.state = state;
+                    }
+                    params.username = phone;
+                    params.code = code;
+                    console.log(JSON.stringify(params));
+
+
+                    $.ajax({
+                        type: 'POST',
+                        url:'/api/v1/login_with_sms',
+                        data:JSON.stringify(params),
+                        contentType:"application/json",
+                        success:function(datas){
+                                if(datas.ErrNo == 0) {
+
+                                    var redirect_uri = datas.redirect_uri;
+                                    if (redirect_uri !== undefined){
+                                        window.location.href = redirect_uri;
+                                    }
+                                }else if(datas.ErrNo == 4005 ){
+                                    layer.open({
+                                        content:'用户不存在',
+                                        skin: 'msg',
+                                        fixed: false,
+                                        top:-100,
+                                        time:1
+                                    })
+                                }else if(datas.ErrNo == 4010 ){
+                                    layer.open({
+                                        content:'验证码错误',
+                                        skin: 'msg',
+                                        fixed: false,
+                                        top:-100,
+                                        time:1
+                                    })
+                                }else if(datas.ErrNo == 4001 ){
+                                    layer.open({
+                                        content:'参数错误',
+                                        skin: 'msg',
+                                        fixed: false,
+                                        top:-100,
+                                        time:1
+                                    })
+                                }else if(datas.ErrNo == 4003 ){
+                                    layer.open({
+                                        content:'验证码已过期',
+                                        skin: 'msg',
+                                        fixed: false,
+                                        top:-100,
+                                        time:1
+                                    })
+                                }else{
+                                    layer.open({
+                                        content:datas.ErrMsg || '',
+                                        skin: 'msg',
+                                        fixed: false,
+                                        top:-100,
+                                        time:1
+                                    })
+                                }
+
+                        }
+                    })
+                }
+            });
+            $('.delete').click(function(){
+                $('.phone-input').val('')
+            });
+        })
+        function getParamsFromUrl (urlString) {
+          const urlParts = urlString.split('?')
+          const queryString = urlParts[1]
+          const queryParams = {}
+          queryString.split('&').forEach(pair => {
+            const [key, value] = pair.split('=')
+            queryParams[key] = value
+          })
+          return queryParams
+        }
+    </script>
+</body>
+</html>

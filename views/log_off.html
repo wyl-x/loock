@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>申请注销APP账号</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            color: #333;
+            font-size: 0.36rem;
+            font-family: sans-serif;
+        }
+
+        .app {
+            margin: 0 auto;
+            width: 7.2rem;
+        }
+
+        .title {
+            margin: 1.2rem 0.54rem 1rem;
+        }
+
+        .input-wrap {
+            margin: 0 .54rem;
+        }
+
+        .input-wrap input {
+            border-radius: 0.18rem;
+            width: 100%;
+            font-size: 0.32rem;
+            background: #E7E7E7;
+            padding: 0.18rem 0.34rem;
+            border: none !important;
+            outline: none !important;
+        }
+
+        .input-wrap2 input {
+            padding-right: 1.8rem;
+        }
+
+        .input-wrap.error input {
+            border: 1px solid #FF6547 !important;
+        }
+
+        .input-wrap2 {
+            position: relative;
+            margin-top: 0.46rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .code-msg {
+            position: absolute;
+            top: 50%;
+            right: 0.2rem;
+            transform: translate(0, -50%);
+            font-size: 0.24rem;
+            color: #FF6547;
+        }
+
+        .text-error {
+            color: #FF6547;
+            font-size: 0.28rem;
+            opacity: 0;
+        }
+
+        .error .text-error {
+            opacity: 1;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .msg-wrap {
+            font-size: 0.28rem;
+            margin-bottom: 0.42rem;
+            padding-left: 0.6rem;
+        }
+
+        .msg1 {
+            margin: 0 0.2rem 0 0.4rem;
+        }
+
+        .msg2 {
+            color: #33A8FF;
+        }
+
+        .btn {
+            margin: 0 0.36rem;
+            text-align: center;
+            border-radius: 0.46rem;
+            padding: 0.24rem 0;
+            background: #000;
+            color: #fff;
+        }
+
+        .slide-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.5);
+            width: 100vw;
+            height: 100vh;
+            display: none;
+        }
+
+        #slider-puzzle-container {
+            position: absolute;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5.6rem;
+            min-height: 5.6rem;
+            padding: 0.1rem;
+        }
+
+        .slider-puzzle-bg {
+            position: relative;
+        }
+
+        #captcha-bg {
+            width: 100%;
+        }
+
+        #puzzle-piece {
+            position: absolute;
+            top: 1.1rem;
+            left: 0;
+            width: 1.1rem;
+            border: 1px solid #fff;
+        }
+
+        #slider-bar {
+            font-size: 0.32rem;
+            background: #dee0e1;
+            padding: 0.2rem;
+            border-radius: 0.4rem;
+            position: relative;
+            text-align: center;
+            color: #666;
+            margin: 0.24rem 0;
+            cursor: move;
+            user-select: none;
+        }
+
+        #slider-btn {
+            position: absolute;
+            width: 1rem;
+            height: 1rem;
+            box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+            top: 50%;
+            left: 0;
+            transform: translate(0, -50%);
+            border-radius: 100%;
+            background: #fff;
+            justify-content: center;
+        }
+
+        #slider-btn img {
+            display: block;
+            width: 0.5rem;
+        }
+
+        .icon-wrap {
+            border-top: 1px solid #e5e5e5;
+            padding-top: 0.15rem;
+        }
+
+        .icon-wrap img {
+            width: 0.5rem;
+            margin-left: 0.15rem;
+        }
+
+        .result-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #fff;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+        }
+
+        .r-content {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 5.6rem;
+            text-align: center;
+        }
+
+        .r-icon-wrap {
+            width: 1.68rem;
+            height: 1.68rem;
+            margin: 0 auto;
+            border-radius: 100%;
+            background: #e5f4ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .r-icon-wrap img {
+            width: 1rem;
+            display: block;
+        }
+
+        .r-title {
+            margin: 0.4rem 0.6rem;
+            font-size: 0.32rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .r-sub-title {
+            font-size: 0.30rem;
+            color: #9e9e9e;
+        }
+    </style>
+    <script>
+        //rem原理 根字体大小
+        change()
+        //窗口大小改变事件
+        window.onresize = function () {
+            change()
+        }
+        //横竖屏事件
+        window.onorientationchange = function () {
+            change();
+        }
+
+        function change() {
+            // document.documentElement.clientWidth设备可是宽度  document.body.clientWidth IE兼容问题
+            var winW = document.documentElement.clientWidth || document.body.clientWidth
+            var fontSize = winW * 100 / 720
+            document.documentElement.style.fontSize = Math.min(fontSize, 100) + 'px';
+            // console.log('1rem' + winW * 100 / 750 + 'px');
+        }
+
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="app">
+        <div class="title">正在申请注销你的APP账号，请输入当前账号对应的邮箱地址。验证码将发送到您填写的邮箱地址， 再次确保是本人操作！
+        </div>
+
+        <div class="form-wrap">
+            <div class="input-wrap input-wrap1">
+                <input id="email" type="text" placeholder="请输入邮件地址">
+                <div class="text-error">邮箱输入有误</div>
+            </div>
+            <div class="input-wrap input-wrap2">
+                <input type="text" placeholder="请输入邮件验证码">
+                <div class="code-msg">获取验证码</div>
+            </div>
+        </div>
+
+        <div class="flex msg-wrap">
+
+            <input type="checkbox" id="checkbox">
+            <label for="checkbox" class="msg1">我已阅读和同意</label>
+            <div class="msg2">注销APP账号说明</div>
+        </div>
+
+        <div class="btn">确定</div>
+
+        <div class="slide-wrap">
+            <div id="slider-puzzle-container">
+                <div class="slider-puzzle-bg">
+                    <img src="" alt="image" id="captcha-bg">
+                    <img src="" alt="image" id="puzzle-piece">
+                </div>
+                <div id="slider-bar">
+                    拖动滑块完成拼图
+                    <div id="slider-btn" class="flex">
+                        <img src="/public/images/line.png" alt="">
+                    </div>
+                </div>
+
+                <div class="icon-wrap">
+                    <img id="close" src="/public/images/close.png" alt="">
+                    <img id="refresh" src="/public/images/refresh.png" alt="">
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="result-wrap">
+            <div class="r-content">
+                <div class="r-icon-wrap">
+                    <img src="/public/images/gou.png" alt="">
+                </div>
+
+                <div class="r-title">您已成功注销APP账号</div>
+                <div class="r-sub-title">3s后 <br> 无操作自动返回首页</div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function getQuery(key) {
+            return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+        }
+
+        var BG_WIDTH = 200
+        var SLIDE_WIDTH = 40
+
+        // 验证码
+        var isDragging = false
+        var startX = 0
+        var code = ''
+
+        var emailValid = false
+
+        var bgWidthActual = $('#captcha-bg').width()
+        var slideWidthActual = $('#puzzle-piece').width()
+        var scale = BG_WIDTH / bgWidthActual
+
+
+        function validateEmail() {
+            var email = $('#email').val();
+            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (emailRegex.test(email)) {
+                $('.input-wrap1').removeClass('error')
+                emailValid = true
+            } else {
+                $('.input-wrap1').addClass('error')
+                emailValid = false
+            }
+        }
+
+
+        function getCode(res) {
+
+            var codeForm = {
+                email: $('#email').val(),
+                token: res.ticket_token,
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '/verify_codeV3',
+                data: JSON.stringify(codeForm),
+                success: function (res) {
+                    console.log('/verify codeV3', res)
+                },
+                error: function (err) {
+                    console.log('err', err)
+                },
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json'
+            });
+        }
+
+        function verify() {
+            var verifyForm = {
+                email: $('#email').val(),
+                code: $('#code').val(),
+            }
+
+            console.log(verifyForm);
+
+            $('.result-wrap').show()
+
+            setTimeout(function () {
+                $('.result-wrap').hide()
+            }, 3000)
+
+        }
+
+        function handleTouchEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            var finalX = $("#puzzle-piece").position().left * scale;
+            console.log('finalX', finalX)
+            alert(finalX)
+            $.ajax({
+                type: "POST",
+                url: '/verify_captchaV3',
+                data: JSON.stringify({
+                    code: code,
+                    position: {
+                        x: finalX,
+                        y: 0
+                    }
+                }),
+                success: function (res) {
+                    console.log('/verify captchaV3', res)
+                },
+                error: function (err) {
+                    console.log('err', err)
+                },
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json'
+            });
+
+            setTimeout(function () {
+                $("#slider-btn").css("left", 0 + "px");
+                $("#puzzle-piece").css("left", 0 + "px");
+            }, 1000)
+        }
+
+        function getImage(init) {
+            $.ajax({
+                type: "GET",
+                url: '/api/v3/svg_captcha',
+                data: '',
+                success: function (res) {
+                    console.log('/api/v3/svg_captcha', res)
+                    code = res.code
+                    $('#captcha-bg').attr('src', res.bg_url)
+                    $('#puzzle-piece').attr('src', res.block_url)
+                    init && $('.slide-wrap').show()
+                },
+                dataType: 'json'
+            });
+
+            $('#captcha-bg').attr('src', '../demo/bg.png')
+            $('#puzzle-piece').attr('src', '../demo/slide.png')
+            init && $('.slide-wrap').show()
+
+            bgWidthActual = $('#captcha-bg').width()
+            slideWidthActual = $('#puzzle-piece').width()
+            scale = BG_WIDTH / bgWidthActual
+            console.log('bgWidthActual', bgWidthActual)
+            console.log('slideWidthActual', slideWidthActual)
+        }
+
+        $(function () {
+            if (getQuery('confirm') === '1') {
+                $('#checkbox').attr('checked', true)
+            }
+
+            $('.msg2').click(function () {
+                location.href = './log_off_desc.html?email=' + $('#email').val()
+            })
+
+
+            $('#email').on('input', validateEmail)
+
+            $('.btn').click(function () {
+                verify()
+            })
+
+            $('.code-msg').click(function () {
+                if (!emailValid) return
+                getImage(1)
+            })
+
+
+            $('#refresh').click(function () {
+                getImage()
+            })
+
+            $('#close').click(function () {
+                $('.slide-wrap').hide()
+            })
+
+            if ('ontouchstart' in window) {
+                console.log('Touch events are supported!');
+                $("#slider-btn").on('touchstart', function (e) {
+                    var touch = e.originalEvent.touches[0];
+                    isDragging = true;
+                    startX = touch.clientX;
+                })
+
+                // 鼠标移动时拖动拼图块和滑块
+                $(document).on('touchmove', function (e) {
+                    var touch = e.originalEvent.touches[0];
+
+                    if (isDragging) {
+                        var moveX = touch.clientX - startX;
+                        if (moveX >= 0 && moveX <= bgWidthActual - slideWidthActual) { // 限制滑块的移动范围
+                            $("#slider-btn").css("left", moveX + "px");
+                            $("#puzzle-piece").css("left", moveX + "px");
+                        }
+                    }
+                });
+
+                $(document).on('touchend', handleTouchEnd);
+            } else {
+                console.log('Touch events are not supported.');
+                // 鼠标按下时开始拖动
+                $("#slider-btn").mousedown(function (e) {
+                    isDragging = true;
+                    startX = e.clientX;
+                });
+
+                // 鼠标移动时拖动拼图块和滑块
+                $(document).mousemove(function (e) {
+                    if (isDragging) {
+                        var moveX = e.clientX - startX;
+                        if (moveX >= 0 && moveX <= bgWidthActual - slideWidthActual) { // 限制滑块的移动范围
+                            $("#slider-btn").css("left", moveX + "px");
+                            $("#puzzle-piece").css("left", moveX + "px");
+                        }
+                    }
+                });
+
+                // 鼠标松开时停止滑动，并判断是否滑动到位
+                $(document).mouseup(handleTouchEnd);
+            }
+
+        })
+    </script>
+</body>
+
+</html>

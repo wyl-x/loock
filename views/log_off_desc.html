@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>申请注销APP账号</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            color: #333;
+            font-size: 0.28rem;
+            font-family: sans-serif;
+        }
+
+        .app {
+            margin: 0 auto;
+            width: 7.2rem;
+        }
+
+        .content {
+            margin: 0.5rem 0.54rem;
+        }
+
+        .title {
+            margin-bottom: 0.5rem;
+        }
+
+        .sub-title {
+            font-weight: bold;
+            margin: 0.4rem 0;
+        }
+
+
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+
+
+        .btn {
+            margin: 0 0.36rem;
+            text-align: center;
+            border-radius: 0.46rem;
+            padding: 0.24rem 0;
+            background: #000;
+            color: #fff;
+        }
+    </style>
+    <script>
+        //rem原理 根字体大小
+        change()
+        //窗口大小改变事件
+        window.onresize = function () {
+            change()
+        }
+        //横竖屏事件
+        window.onorientationchange = function () {
+            change();
+        }
+
+        function change() {
+            // document.documentElement.clientWidth设备可是宽度  document.body.clientWidth IE兼容问题
+            var winW = document.documentElement.clientWidth || document.body.clientWidth
+            var fontSize = winW * 100 / 720
+            document.documentElement.style.fontSize = Math.min(fontSize, 100) + 'px';
+            // console.log('1rem' + winW * 100 / 750 + 'px');
+        }
+
+    </script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="app">
+        <div class="content">
+            <div class="title">
+                在此页面，你可申请注销
+                <strong class="email">1234@lockin.com</strong> 账号。
+            </div>
+
+
+            <div class="sub-title">
+                申请注销前，请确保：
+            </div>
+
+            1.你的鹿客账号处于安全状态；<br>
+            2.注销由你本人发起；<br>
+            3.如有需要，请自行备份重要数据和信息。
+
+
+            <div class="sub-title">
+                请特别注意：
+            </div>
+
+            完成注销后，当前账号下的所有账户信息、用户信息都将被清除。且注销账号后数据不可找回、不可恢复，请谨慎操作。<br><br>
+
+            注销账号不代表解除绑定设备，若你需要清除绑定设备的数据，请直接在设备上进行重置或者注销鹿客管家服务。<br><br>
+
+            如要重新使用设备，需再次绑定设备并重新授权。
+
+        </div>
+
+        <div class="btn">同意</div>
+    </div>
+
+    <script>
+        function getQuery(key) {
+            return decodeURI(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURI(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));
+        }
+
+        $(function () {
+            $('.email').text(getQuery('email'))
+
+            $('.btn').click(function () {
+                location.href = './log_off.html?confirm=1'
+            })
+        })
+    </script>
+</body>
+
+</html>
